@@ -1,0 +1,24 @@
+{
+  "name": "birthdates_backend",
+  "version": "1.0.0",
+  "description": "An express server to serve an API for BirthDates",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon src/index.ts",
+    "start:prod": "npx tsc && node build/index.js"
+  },
+  "author": "Yannick Soultane",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.24",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3"
+  }
+}
