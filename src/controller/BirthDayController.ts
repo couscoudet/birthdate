@@ -58,9 +58,13 @@ export class BirthDayController {
   async delete(req: Request, res: Response): Promise<{ message: string }> {
     try {
       if (Number.isInteger(+req.params.id)) {
-        return await this.birthDayService.delete(+req.params.id);
+        if (await this.birthDayService.getById(+req.params.id)) {
+          return await this.birthDayService.delete(+req.params.id);
+        } else {
+          res.status(400).send("the birthday id must exist");
+        }
       } else {
-        res.status(400).send("the birthday id must be an integer");
+        res.status(400).send("the birthday id must be a number");
       }
     } catch (e) {
       res.status(500).json({ error: e, message: "birthday not deleted" });

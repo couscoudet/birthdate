@@ -14,6 +14,16 @@ export class BirthDayService {
     }
   }
 
+  async getById(id: number): Promise<BirthDay> {
+    try {
+      return await this.BirthDayRepository.findOne({
+        where: { id: id },
+      });
+    } catch (e) {
+      throw new Error(e.message ? e.message : e);
+    }
+  }
+
   async getByMonth(month: number): Promise<BirthDay[]> {
     try {
       return await this.BirthDayRepository.find({ where: { month: month } });
