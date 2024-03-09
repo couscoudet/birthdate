@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
-import { Routes } from "./src/route";
+import { Routes } from "./route";
 import * as bodyParser from "body-parser";
+import UserService from "./service/UserService";
 var cors = require("cors");
 
 export default class BirthApp {
@@ -41,6 +42,7 @@ export default class BirthApp {
         `Express server has started on http://localhost:${process.env.PORT} on this DB : ${process.env.DB_NAME}.`
       );
     });
+    UserService.initiateUserCleanEvents();
     return this.app;
   }
 

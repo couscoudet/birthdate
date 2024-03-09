@@ -2,7 +2,7 @@ import { validate } from "class-validator";
 import BirthDaySchema from "../entity/BirthDaySchema.dto";
 import { BirthDayService } from "../service/BirthDayService";
 import { Request, Response } from "express";
-import { BirthDay } from "../entity/BirthDay";
+import BirthDay from "../entity/BirthDay";
 import { request } from "http";
 
 export class BirthDayController {

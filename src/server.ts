@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { AppDataSource } from "./data-source";
-import BirthApp from "../app";
+import BirthApp from "./app";
 
 dotenv.config();
 

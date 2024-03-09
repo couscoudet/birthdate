@@ -1,4 +1,6 @@
+import AuthController from "./controller/AuthConctroller";
 import { BirthDayController } from "./controller/BirthDayController";
+import UserController from "./controller/UserController";
 
 export const Routes = [
   //store birthdays
@@ -31,5 +33,21 @@ export const Routes = [
     url: "/api/birthday/:id",
     action: "delete",
     controller: BirthDayController,
+  },
+
+  //create user
+  {
+    method: "post",
+    url: "/signup",
+    action: "store",
+    controller: UserController,
+  },
+
+  //login
+  {
+    method: "post",
+    url: "/login",
+    action: "login",
+    controller: AuthController,
   },
 ];

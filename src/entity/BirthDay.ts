@@ -2,12 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import User from "./User";
 
 @Entity()
-export class BirthDay {
+export default class BirthDay {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,4 +27,7 @@ export class BirthDay {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(() => User, (user) => user.birthdays)
+  user: User;
 }

@@ -1,4 +1,4 @@
-import { BirthDay } from "../entity/BirthDay";
+import BirthDay from "../entity/BirthDay";
 import { AppDataSource } from "../data-source";
 
 export class BirthDayService {
