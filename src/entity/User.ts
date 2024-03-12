@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -31,4 +32,7 @@ export default class User {
 
   @OneToMany(() => BirthDay, (birthday) => birthday.user)
   birthdays: BirthDay[];
+
+  @OneToOne(() => RefreshToken)
+  refreshToken: RefreshToken;
 }

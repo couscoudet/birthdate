@@ -45,4 +45,12 @@ export default class UserController {
       throw new Error(e.message);
     }
   }
+
+  async deleteUser(req: Request, res: Response) {
+    try {
+      return await this.userService.deleteUser(req.params.id);
+    } catch (e) {
+      res.status(500).json({ error: e.message, message: "can't delete User" });
+    }
+  }
 }

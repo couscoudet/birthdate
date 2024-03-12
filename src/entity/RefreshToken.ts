@@ -18,7 +18,7 @@ export default class RefreshToken {
   refreshToken: string;
 
   @Index()
-  @OneToOne(() => User)
+  @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 }

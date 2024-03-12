@@ -28,6 +28,6 @@ export default class BirthDay {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.birthdays)
+  @ManyToOne(() => User, (user) => user.birthdays, { onDelete: "CASCADE" })
   user: User;
 }

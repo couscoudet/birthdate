@@ -39,4 +39,20 @@ export default class UserService {
       throw new Error(e);
     }
   }
+
+  async updateUser(id: number, user: User) {
+    try {
+      return await this.UserRepository.update(id, user);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async deleteUser(id) {
+    try {
+      return await this.UserRepository.delete(id);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
 }

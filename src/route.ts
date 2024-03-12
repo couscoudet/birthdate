@@ -35,12 +35,12 @@ export const Routes = [
     controller: BirthDayController,
   },
 
-  //create user
+  //signup
   {
     method: "post",
     url: "/signup",
-    action: "store",
-    controller: UserController,
+    action: "signup",
+    controller: AuthController,
   },
 
   //login
@@ -49,5 +49,21 @@ export const Routes = [
     url: "/login",
     action: "login",
     controller: AuthController,
+  },
+
+  //confirm email
+  {
+    method: "get",
+    url: "/emailConfirm/:token",
+    action: "confirmEmail",
+    controller: AuthController,
+  },
+
+  //delete User
+  {
+    method: "delete",
+    url: "/api/user/:id",
+    action: "deleteUser",
+    controller: UserController,
   },
 ];
