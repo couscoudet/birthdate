@@ -1,5 +1,6 @@
-import AuthController from "./controller/AuthConctroller";
+import AuthController from "./controller/AuthController";
 import { BirthDayController } from "./controller/BirthDayController";
+import RefreshTokenController from "./controller/RefreshTokenController";
 import UserController from "./controller/UserController";
 
 export const Routes = [
@@ -57,6 +58,14 @@ export const Routes = [
     url: "/emailConfirm/:token",
     action: "confirmEmail",
     controller: AuthController,
+  },
+
+  //use refreshToken to update token
+  {
+    method: "get",
+    url: "/refreshToken",
+    action: "updateAccessToken",
+    controller: RefreshTokenController,
   },
 
   //delete User

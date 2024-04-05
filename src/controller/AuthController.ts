@@ -64,12 +64,14 @@ export default class AuthController {
       const confirmationToken = jwt.sign(
         { user: { id: user.id, email: user.email } },
         process.env.JWT_PRIVATE_KEY_CONFIRMATION,
-        { expiresIn: "15m" }
+        { expiresIn: "45m" }
       );
       const info = this.emailUtil.emailConfirm(user.email, confirmationToken);
       res.status(200).json({ message: "mail send", message_info: info });
     } catch (e) {
-      res.status(500).json({ error: e.message, message: "signup" });
+      res
+        .status(e.statusCode ? e.statusCode : 500)
+        .json({ error: e.message, message: "signup failed" });
     }
   }
 
@@ -80,6 +82,7 @@ export default class AuthController {
         process.env.JWT_PRIVATE_KEY_CONFIRMATION
       );
       payload.user.emailConfirmed = true;
+      console.log(payload.user);
       return this.userService.updateUser(payload.user.id, payload.user);
     } catch (e) {
       if (e.message === "jwt expired") {

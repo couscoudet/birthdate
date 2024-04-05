@@ -30,14 +30,14 @@ export default class EmailUtil {
       subject: "BirthDates : Merci de confirmer votre adresse email",
       text: `copiez ce lien dans votre navigateur : ${process.env.FRONTEND_BASE_URL}/confirm-my-email/${this.confirmationToken}`,
       html: `<html><b> Voici votre lien de confirmation</b>
-    <a href=${process.env.FRONTEND_BASE_URL}/confirm-my-email/${this.confirmationToken}>Cliquez ici</a></html>`,
+    <a href=${process.env.FRONTEND_BASE_URL}/email-confirm/${this.confirmationToken}>Cliquez ici</a></html>`,
     };
   }
 
   sendConfirmationEmail() {
     this.transporter.sendMail(this.confirmationEmailData(), (err, info) => {
       if (err) {
-        throw new Error(err);
+        return { error: err };
       } else {
         console.log(info);
         return info;
@@ -48,6 +48,10 @@ export default class EmailUtil {
   emailConfirm(receiver: string, confirmationToken: string) {
     this.receiver = receiver;
     this.confirmationToken = confirmationToken;
-    this.sendConfirmationEmail();
+    try {
+      this.sendConfirmationEmail();
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 }

@@ -17,6 +17,7 @@ export default class UserController {
       const errors = await validate(user);
       if (errors.length > 0) {
         res.status(400).send("user validation failed : " + errors);
+        return;
       } else {
         const email = req.body.user.email;
         const password = await bcrypt.hash(
@@ -29,11 +30,12 @@ export default class UserController {
       }
     } catch (e) {
       if (e.message.includes("Duplicate entry")) {
-        res.status(409).json({ message: "This email already exist" });
+        e.statusCode = 409;
+        e.message = "This email already exist";
+        throw e;
       } else {
-        res
-          .status(500)
-          .json({ error: e.message, message: "can't create user" });
+        e.message = "can't create user";
+        throw e;
       }
     }
   }

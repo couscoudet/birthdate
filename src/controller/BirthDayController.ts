@@ -4,6 +4,7 @@ import { BirthDayService } from "../service/BirthDayService";
 import { Request, Response } from "express";
 import BirthDay from "../entity/BirthDay";
 import { request } from "http";
+import { RequestWithUser } from "../interface/RequestWithUser";
 
 export class BirthDayController {
   private birthDayService: BirthDayService;
@@ -12,7 +13,7 @@ export class BirthDayController {
     this.birthDayService = new BirthDayService();
   }
 
-  async store(req: Request, res: Response): Promise<BirthDay> {
+  async store(req: RequestWithUser, res: Response): Promise<BirthDay> {
     try {
       let birthday = new BirthDaySchema();
       birthday.hydrate(req.body.birthday);
@@ -20,21 +21,29 @@ export class BirthDayController {
       if (errors.length > 0) {
         res.status(400).send("validation failed : " + errors);
       } else {
-        return await this.birthDayService.store(birthday);
+        return await this.birthDayService.store(birthday, req.user.id);
       }
     } catch (e) {
       res.status(500).json({ error: e, message: "birthday not created" });
     }
   }
 
-  async getByMonth(req: Request, res: Response): Promise<BirthDay[]> {
+  async getByMonth(
+    req: RequestWithUser,
+    res: Response
+  ): Promise<{ birthdays: BirthDay[] }> {
     try {
       if (
         Number.isInteger(+req.params.month) &&
         +req.params.month > 0 &&
         +req.params.month < 13
       ) {
-        return await this.birthDayService.getByMonth(+req.params.month);
+        return {
+          birthdays: await this.birthDayService.getByMonth(
+            +req.params.month,
+            req.user.id
+          ),
+        };
       } else {
         res.status(400).send("month must be a number between 1 and 12");
       }

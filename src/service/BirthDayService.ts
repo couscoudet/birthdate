@@ -4,10 +4,15 @@ import { AppDataSource } from "../data-source";
 export class BirthDayService {
   private BirthDayRepository = AppDataSource.getRepository(BirthDay);
 
-  async store({ name, day, month }): Promise<BirthDay> {
+  async store({ name, day, month }, userId): Promise<BirthDay> {
     try {
       return await this.BirthDayRepository.save(
-        this.BirthDayRepository.create({ name, day, month })
+        this.BirthDayRepository.create({
+          name,
+          day,
+          month,
+          user: { id: userId },
+        })
       );
     } catch (e) {
       throw new Error(e.message ? e.message : e);
@@ -24,9 +29,11 @@ export class BirthDayService {
     }
   }
 
-  async getByMonth(month: number): Promise<BirthDay[]> {
+  async getByMonth(month: number, userId: number): Promise<BirthDay[]> {
     try {
-      return await this.BirthDayRepository.find({ where: { month: month } });
+      return await this.BirthDayRepository.find({
+        where: { month: month, user: { id: userId } },
+      });
     } catch (e) {
       throw new Error(e.message ? e.message : e);
     }

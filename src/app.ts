@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import { Routes } from "./route";
 import * as bodyParser from "body-parser";
 import UserService from "./service/UserService";
+import jwtMiddleware from "./middleware/jwtMiddleware";
 var cors = require("cors");
 
 export default class BirthApp {
@@ -11,7 +12,7 @@ export default class BirthApp {
     this.app = express();
     this._preHandlerMiddleware();
     this.app.use(cors({ origin: "*" }));
-
+    this.app.use("/api/*", jwtMiddleware);
     Routes.forEach((route) => {
       this.app[route.method](
         route.url,
@@ -28,7 +29,7 @@ export default class BirthApp {
                 : undefined
             );
           } else if (result !== null && result !== undefined) {
-            res.json(result);
+            res.send(result);
           }
         }
       );
