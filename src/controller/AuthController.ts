@@ -29,12 +29,12 @@ export default class AuthController {
           const token = jwt.sign(
             { user: { id: user.id, email: user.email } },
             process.env.JWT_PRIVATE_KEY,
-            { expiresIn: "15m" }
+            { expiresIn: "10m" }
           );
           const refreshToken = jwt.sign(
             { user: { id: user.id, email: user.email } },
             process.env.JWT_PRIVATE_REFRESH_KEY,
-            { expiresIn: "7d" }
+            { expiresIn: "15d" }
           );
           const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
           await this.refreshTokenService.storeOrUpdate({

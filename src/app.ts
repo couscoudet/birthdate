@@ -40,10 +40,9 @@ export default class BirthApp {
   startExpress() {
     this.app.listen(process.env.PORT, () => {
       console.log(
-        `Express server has started on http://localhost:${process.env.PORT} on this DB : ${process.env.DB_NAME}.`
+        `Express server has started on http://localhost:${process.env.PORT} on this DB ENV : ${process.env.NODE_ENV}.`
       );
     });
-    UserService.initiateUserCleanEvents();
     return this.app;
   }
 

@@ -1,8 +1,10 @@
 import BirthDay from "../entity/BirthDay";
-import { AppDataSource } from "../data-source";
+import { dataBaseSource } from "../data-source";
 
 export class BirthDayService {
-  private BirthDayRepository = AppDataSource.getRepository(BirthDay);
+  private BirthDayRepository = dataBaseSource
+    .getDataSource()
+    .getRepository(BirthDay);
 
   async store({ name, day, month }, userId): Promise<BirthDay> {
     try {

@@ -35,22 +35,26 @@ export default class RefreshTokenController {
       const result = await bcrypt.compare(refreshToken, hashedRefreshTokenInDb);
 
       if (result === true) {
-        const token = jwt.sign(
+        const newToken = jwt.sign(
           { user: { id: user.id, email: user.email } },
           process.env.JWT_PRIVATE_KEY,
-          { expiresIn: "15m" }
+          { expiresIn: "10m" }
         );
-        const refreshToken = jwt.sign(
+        const newRefreshToken = jwt.sign(
           { user: { id: user.id, email: user.email } },
           process.env.JWT_PRIVATE_REFRESH_KEY,
-          { expiresIn: "7d" }
+          { expiresIn: "15d" }
         );
-        const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+        const newHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
         await this.refreshTokenService.storeOrUpdate({
-          refreshToken: hashedRefreshToken,
+          refreshToken: newHashedRefreshToken,
           user: user,
         });
-        return { user: user.email, token: token, refreshToken: refreshToken };
+        return {
+          user: user.email,
+          token: newToken,
+          refreshToken: newRefreshToken,
+        };
       }
     } catch (e) {
       res.status(e.statusCode ? e.statusCode : 500).send(e.message);

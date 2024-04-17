@@ -15,10 +15,10 @@ const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
     req["user"] = payload.user;
+    next();
   } catch {
     res.status(403).send("unauthorized");
   }
-  next();
 };
 
 export default jwtMiddleware;

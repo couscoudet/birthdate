@@ -1,8 +1,10 @@
-import { AppDataSource } from "../data-source";
+import { dataBaseSource } from "../data-source";
 import RefreshToken from "../entity/RefreshToken";
 
 export default class RefreshTokenService {
-  private refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+  private refreshTokenRepository = dataBaseSource
+    .getDataSource()
+    .getRepository(RefreshToken);
 
   async storeOrUpdate(refreshToken: RefreshToken): Promise<void> {
     try {
